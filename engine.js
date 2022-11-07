@@ -16,7 +16,7 @@ const games = {
 	"2-1":	[
 		[0, 1, 0, 0],
 		[1, 0, 1, 0],
-		[0, 1, 0, 0],
+		[0, 1, 0, 1],
 		[1, 1, 1, 1]
 	],
 };
@@ -55,9 +55,9 @@ const setupGame = (index) => {
 			if (colClues.length > i) {
 				const clue = colClues[i];
 				const lastClue = clue[clue.length - 1];
-				if (clue <= 0 && lastClue > 0) {
+				if (cell <= 0 && lastClue > 0) {
 					clue.push(0);
-				} else if (clue <= 0 && lastClue <= 0) {
+				} else if (cell <= 0 && lastClue <= 0) {
 					// do nothing
 				} else {
 					clue[clue.length - 1] = lastClue + cell;
@@ -116,7 +116,11 @@ const setupGame = (index) => {
 
 	for (const clue of colClues) {
 		const th = document.createElement("th");
-		th.textContent = clue.join(" ");
+		for (const no of clue) {
+			const p = document.createElement("p");
+			p.textContent = no;
+			th.appendChild(p);
+		}
 		head.append(th);
 	}
 }
