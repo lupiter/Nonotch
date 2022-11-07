@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Tama Nona</title>
+	<style type="text/css">
+		td, th {
+			border:  1px solid silver;
+			padding:  1rem;
+		}
+		td.true {
+			background: black;
+		}
+		thead th {
+			border-width: 0 1px 0 0;
+		}
+		tbody th {
+			border-width: 1px 0;
+		}
+		table {
+			margin:  1rem;
+			border-collapse: collapse;
+		}
+		fieldset {
+			display: inline;
+		}
+	</style>
+	<script src="engine.js"></script>
+</head>
+<body>
+<h1>Tama Nona</h1>
+
+<section>
+	<fieldset>
+		<legend>Tools</legend>
+		<label><input type="radio" name="tool" value="o" id="tool_pen" checked /> 🖊</label>
+		<label><input type="radio" name="tool" value="x" /> ❌</label>
+	</fieldset>
+
+	<fieldset>
+		<legend>Puzzle</legend>
+		<label>
+			<select id="gameselect">
+				<optgroup label="T1">
+					<option value="1-1">1</option>
+					<option value="1-2">2</option>
+				</optgroup>
+				<optgroup label="T2">
+					<option value="2-1">1</option>
+					<option value="2-2">2</option>
+				</optgroup>
+				<optgroup label="Angel">
+					<option value="3-1">1</option>
+					<option value="3-2">2</option>
+				</optgroup>
+			</select>
+		</label>
+		<button disabled>Save</button>
+		<button disabled>Load</button>
+	</fieldset>
+
+</section>
+
+<table id="gameboard">
+	<thead>
+		<tr id="gamehead">
+		</tr>
+	</thead>
+	<tbody id="gamebody">
+	</tbody>
+</table>
+
+<section>
+	<h4>Tips</h4>
+	<p>If you're using a mouse, you can right-click or middle-click to use the innactive tool.
+
+
+
+</section>
+
+</body>
+</html>
