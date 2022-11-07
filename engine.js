@@ -19,6 +19,18 @@ const games = {
 		[0, 1, 0, 1],
 		[1, 1, 1, 1]
 	],
+	"2-2":	[
+		[0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+		[1, 0, 1, 0, 1, 1, 1, 1, 1, 1],
+		[0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+		[1, 0, 1, 0, 1, 1, 1, 1, 1, 1],
+		[0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+		[1, 0, 1, 0, 1, 1, 1, 1, 1, 1],
+		[0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+		[1, 0, 1, 0, 1, 1, 1, 1, 1, 1],
+		[0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+		[1, 1, 1, 1, 1, 1, 0, 0, 0, 1]
+	],
 };
 
 const toolIsPen = (e) => {
@@ -43,6 +55,7 @@ const setupGame = (index) => {
 	const body = document.getElementById("gamebody");
 	removeAllChildren(body);
 	const colClues = [];
+	var mistakes = 0;
 
 	// create gameboard
 	for (const row of game) {
@@ -80,12 +93,14 @@ const setupGame = (index) => {
 			const onclick = (e) => {
 				var value = undefined;
 				var currentValue = td.dataset.value === "false" ? false : td.dataset.value === "true" ? true : undefined;
+				var mistake = false;
 
 				if (toolIsPen(e)) {
 					if (cell > 0) {
 						value = true;
 					} else {
 						value = false;
+						mistake = true;
 					}
 				} else {
 					if (currentValue === false) {
@@ -99,6 +114,10 @@ const setupGame = (index) => {
 				td.dataset.value = value;
 				td.className = value;
 				td.textContent = value === true ? "o" : value === false ? "x" : " ";
+				if (mistake) {
+					mistakes += 1;
+					document.getElementById("mistakes").value = mistakes;
+				}
 			}
 			td.onclick = onclick;
 			td.oncontextmenu = (e) => {

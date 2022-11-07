@@ -5,11 +5,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Tama Nona</title>
 	<style type="text/css">
+		body {
+			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+		}
 		td, th {
-			border:  1px solid silver;
+			border:  0.5px solid black;
 		}
 		th {
 			padding: 0.5rem;
+			background-color: #a9d9f9;
 		}
 		th p {
 			margin: 0;
@@ -18,19 +22,34 @@
 		td {
 			width: 2rem;
 			height: 2rem;
+			text-align: center;
+		}
+		td:nth-child(5n+1) {
+			border-right-width: 1px;
+		} 
+		tr:nth-child(5n) td {
+			border-bottom-width: 1px;
+		}
+		#mistakes {
+			width: 2rem;
 		}
 		td.true {
 			background: black;
 		}
 		thead th {
-			border-width: 0 1px 0 0;
+			border-width: 0 1px 2px 0;
+			border-color: white;
+			vertical-align: bottom;
 		}
 		tbody th {
-			border-width: 1px 0;
+			border-width: 1px 2px 0px 0px;
+			text-align: right;
+			border-color: white;
 		}
 		table {
 			margin:  1rem;
 			border-collapse: collapse;
+			background: linear-gradient(#eebbdd, #a9d9f9);
 		}
 		fieldset {
 			display: inline;
@@ -66,6 +85,7 @@
 				</optgroup>
 			</select>
 		</label>
+		<label>Mistakes <input disabled value="0" id="mistakes" /></label>
 		<button disabled>Save</button>
 		<button disabled>Load</button>
 	</fieldset>
@@ -81,13 +101,11 @@
 	</tbody>
 </table>
 
-<section>
+<aside>
 	<h4>Tips</h4>
 	<p>If you're using a mouse, you can right-click or middle-click to use the innactive tool.
-
-
-
-</section>
+	<p>If you make a mistake with the 🖊 tool, you'll be corrected, but you can mark ❌ wherever you like.
+</aside>
 
 </body>
 </html>
