@@ -3,6 +3,9 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Sigmar+One">
+
 	<title>Tama Nona</title>
 	<style type="text/css">
 		body {
@@ -15,6 +18,9 @@
 			padding: 0.5rem;
 			background-color: #a9d9f9;
 		}
+		th .clue {
+			margin: 0.25rem;
+		}
 		th p {
 			margin: 0;
 			padding: 0;
@@ -23,12 +29,15 @@
 			width: 2rem;
 			height: 2rem;
 			text-align: center;
+			user-select: none;
+			font-size: 16pt;
+			vertical-align: middle;
 		}
 		td:nth-child(5n+1) {
-			border-right-width: 1px;
+			border-right-width: 2px;
 		} 
 		tr:nth-child(5n) td {
-			border-bottom-width: 1px;
+			border-bottom-width: 2px;
 		}
 		#mistakes {
 			width: 2rem;
@@ -47,65 +56,126 @@
 			border-color: white;
 		}
 		table {
-			margin:  1rem;
 			border-collapse: collapse;
+			border: 1rem solid white;
+			border-color: #eee white white #eee;
 			background: linear-gradient(45deg, #eebbdd, #a9d9f9, #eebbdd, #a9d9f9, #eebbdd, #a9d9f9, #eebbdd, #a9d9f9);
 		}
 		fieldset {
 			display: inline;
+			border: 1px solid white;
+			border-color: #eee white white #eee;
+			background: #eebbdd;
+		}
+		.wrap {
+			margin: auto;
+			max-width: 800px;
+			background-color: #a9d9f9;
+			border-radius: 2rem;
+			padding: 2rem;
+		}
+		section {
+			display: flex;
+			justify-content: center;
+		}
+		h1 {
+			text-align: center;
+			font-family: "Sigmar One", "Comic Sans MS", "Comic Sans", 'Comic Neue', cursive;
+			color: #80c0f9;
+			text-shadow: 2px 2px 0 black, -2px 2px 0 black, 2px -2px 0 black, -2px -2px 0 black;
+			margin: 0;
+			margin-top: -2rem;
+		}
+		.frame {
+			border-image: url('frame.svg') 10%;
+			border-style: solid;
+			border-width: 20px;
+			margin-top: 10px;
+		}
+		dialog {
+			display: none;
+			flex-direction: row;
+			position: absolute;
+			top: 50%;
+			align-items: center;
+			box-shadow: 0 0 5px rgba(0,0,0,0.3);
+			border: 0;
+			border-radius: 1rem;
+		}
+		dialog h1 {
+			margin: 0;
+		}
+		dialog button {
+			align-self: flex-start;
 		}
 	</style>
 	<script src="engine.js"></script>
 </head>
 <body>
-<h1>Tama Nona</h1>
+	<div class="wrap">
+		<section>
+			<fieldset>
+				<legend>Tools</legend>
+				<label><input type="radio" name="tool" value="o" id="tool_pen" checked /> 🖊</label>
+				<label><input type="radio" name="tool" value="x" /> ❌</label>
+			</fieldset>
 
-<section>
-	<fieldset>
-		<legend>Tools</legend>
-		<label><input type="radio" name="tool" value="o" id="tool_pen" checked /> 🖊</label>
-		<label><input type="radio" name="tool" value="x" /> ❌</label>
-	</fieldset>
+			<fieldset>
+				<legend>Puzzle</legend>
+				<label>
+					<select id="gameselect">
+						<optgroup label="T1">
+							<option value="1-1">1</option>
+							<option value="1-2">2</option>
+						</optgroup>
+						<optgroup label="T2">
+							<option value="2-1">1</option>
+							<option value="2-2">2</option>
+						</optgroup>
+						<!-- <optgroup label="Angel">
+							<option value="3-1">1</option>
+							<option value="3-2">2</option>
+						</optgroup> -->
+					</select>
+				</label>
+				<label>😓 <input disabled value="0" id="mistakes" /></label>
+				<button id="reset" type="reset">↺</button>
+				<!-- <button disabled>💾</button>
+				<button disabled>📂</button> -->
+			</fieldset>
 
-	<fieldset>
-		<legend>Puzzle</legend>
-		<label>
-			<select id="gameselect">
-				<optgroup label="T1">
-					<option value="1-1">1</option>
-					<option value="1-2">2</option>
-				</optgroup>
-				<optgroup label="T2">
-					<option value="2-1">1</option>
-					<option value="2-2">2</option>
-				</optgroup>
-				<optgroup label="Angel">
-					<option value="3-1">1</option>
-					<option value="3-2">2</option>
-				</optgroup>
-			</select>
-		</label>
-		<label>Mistakes <input disabled value="0" id="mistakes" /></label>
-		<button disabled>Save</button>
-		<button disabled>Load</button>
-	</fieldset>
+		</section>
 
-</section>
+		<section>
+			<div class="frame">
+				<table id="gameboard">
+					<thead>
+						<tr id="gamehead">
+						</tr>
+					</thead>
+					<tbody id="gamebody">
+					</tbody>
+				</table>
+			</div>
+		</section>
 
-<table id="gameboard">
-	<thead>
-		<tr id="gamehead">
-		</tr>
-	</thead>
-	<tbody id="gamebody">
-	</tbody>
-</table>
+		<h1>NONOTCH</h1>
+	</div>
 
-<aside>
-	<h4>Tips</h4>
-	<p>If you're using a mouse, you can right-click or middle-click to use the innactive tool.
-	<p>If you make a mistake with the 🖊 tool, you'll be corrected, but you can mark ❌ wherever you like.
-</aside>
+	<aside>
+		<h4>Tips</h4>
+		<p>If you're using a mouse, you can right-click or middle-click to use the inactive tool.
+		<p>If you make a mistake with the 🖊 tool, you'll be corrected, but you can mark ❌ wherever you like.
+	</aside>
+
+	<dialog id="solved">
+		<picture>
+			<source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f389/512.webp" type="image/webp">
+			<img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f389/512.gif" alt="🎉" width="100" height="100">
+		</picture>
+		<h1>You solved it!</h1>
+		<button>❌</button>
+	</dialog>
 
 </body>
 </html>

@@ -2,7 +2,6 @@
 
 
 const games = {
-
 	"1-1":	[
 		[0, 1, 0],
 		[1, 1, 1],
@@ -47,6 +46,39 @@ const removeAllChildren = (el) => {
 	}
 }
 
+const solved = () => {
+	const puzzleID = document.getElementById("gameselect").value;
+	const puzzle = games[puzzleID].flat();
+	const cells = Array.from(document.getElementsByTagName("td"));
+
+	for (let i = 0; i < cells.length; i++) {
+		const cell = cells[i].dataset.value;
+		if (cell === undefined && puzzle[i] === 1) {
+			return false;
+		}
+		if (cell === 'true' && puzzle[i] === 0) {
+			return false;
+		}
+		if (cell === 'false' && puzzle[i] === 1) {
+			return false;
+		}
+	}
+	return true;
+}
+
+const checkSolution = () => {
+	if(solved()) {
+		const popup = document.getElementById("solved");
+		popup.style.display = 'flex';
+		for (button of popup.getElementsByTagName('button')) {
+			button.onclick = () => {
+				popup.style.display = 'none';
+			}
+		}
+
+	}
+}
+
 const setupGame = (index) => {
 	const game = games[index];
 	const head = document.getElementById("gamehead");
@@ -56,6 +88,7 @@ const setupGame = (index) => {
 	removeAllChildren(body);
 	const colClues = [];
 	var mistakes = 0;
+	document.getElementById("mistakes").value = 0;
 
 	// create gameboard
 	for (const row of game) {
@@ -113,32 +146,45 @@ const setupGame = (index) => {
 				}
 				td.dataset.value = value;
 				td.className = value;
-				td.textContent = value === true ? "o" : value === false ? "x" : " ";
+				td.textContent = value === true ? "o" : value === false ? "⤬" : " ";
 				if (mistake) {
 					mistakes += 1;
 					document.getElementById("mistakes").value = mistakes;
 				}
+				checkSolution();
 			}
-			td.onclick = onclick;
-			td.oncontextmenu = (e) => {
+			td.onmouseenter = (e) => {
+				if (e.buttons > 0) {
+					onclick(e);
+				}
+			}
+			td.onmousedown = (e) => {
 				onclick(e);
+			}
+			td.oncontextmenu = (e) => {
 				return false;
 			}
 			tr.appendChild(td);
 		}
-		if (rowClues[rowClues.length - 1] === 0) {
-			rowClues.pop();
+		for (const clue of rowClues) {
+			if (clue > 0) {
+				const span = document.createElement("span");
+				span.className = 'clue';
+				span.textContent = clue;
+				th.appendChild(span);
+			}
 		}
-		th.textContent = rowClues.join(" ");
 		body.appendChild(tr);
 	}
 
 	for (const clue of colClues) {
 		const th = document.createElement("th");
 		for (const no of clue) {
-			const p = document.createElement("p");
-			p.textContent = no;
-			th.appendChild(p);
+			if (no > 0) {
+				const p = document.createElement("p");
+				p.textContent = no;
+				th.appendChild(p);
+			}
 		}
 		head.append(th);
 	}
@@ -146,7 +192,12 @@ const setupGame = (index) => {
 
 window.onload = () => {
 	const select = document.getElementById("gameselect");
-	select.onchange = (e) => {
+	select.onchange = () => {
+		setupGame(select.value);
+	}
+	const reset = document.getElementById("reset");
+	reset.onclick = () => {
+
 		setupGame(select.value);
 	}
 	setupGame(select.value);
