@@ -1425,6 +1425,9 @@ const setupGame = (index) => {
 			td.onmousedown = (e) => {
 				onclick(e);
 			}
+			td.ontouchmove = (e) => {
+				onclick(e);
+			}
 			td.oncontextmenu = (e) => {
 				return false;
 			}
@@ -1461,7 +1464,6 @@ window.onload = () => {
 	}
 	const reset = document.getElementById("reset");
 	reset.onclick = () => {
-
 		setupGame(select.value);
 	}
 	setupGame(select.value);
